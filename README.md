@@ -1,43 +1,26 @@
 # SwiftLinkIQ
 
-**Discover Keywords. Unlock Opportunities.**
-
-SwiftLinkIQ is a free, local-first SEO keyword research workspace aligned with the SwiftLink Ceylon Tours brand. It is a static React + TypeScript application designed for GitHub Pages. No account, backend, paid API or API key is required.
+A lightweight Google Trends-style search interface using the SwiftLink Ceylon Tours forest-green and lime brand palette.
 
 ## Features
 
-- Dashboard with local research activity, intent distribution and research history.
-- Keyword Explorer with transparent estimated difficulty, intent classification and opportunity scoring.
-- Bulk analysis for up to 500 pasted keywords per batch.
-- Rule-based keyword suggestions and heuristic keyword clustering.
-- Google Keyword Planner CSV import with preview and support for common exported column names.
-- Saved keywords persisted in browser local storage.
-- Exact-match comparison of user-imported competitor keyword lists.
-- Google Trends handoff without inventing trend values.
-- PDF report and CSV exports.
-- Persistent light and dark themes.
-- Responsive collapsible navigation and mobile drawer.
-- Local data backup and clear-data controls.
+- Search term and filters for location, date range, category and Google search property.
+- Google Trends embedded widgets for interest over time, interest by region, related topics and related queries (subject to Google's embed availability and browser/network access).
+- Direct link to the full Google Trends Explore report if an embedded chart is unavailable.
+- Trending Now handoff to Google's public Trending Now page.
+- Locally saved searches and light/dark theme.
+- GitHub Pages deployment through GitHub Actions.
+- No API key, backend, database, account or paid service required.
 
-## Important data policy
+## Important data limitations
 
-SwiftLinkIQ does **not** claim to provide official Google search volume, CPC, competition or historical trend data on its own. Keyword difficulty, intent and opportunity are WordIQ-style local heuristics and are labelled as estimates. Search volume, CPC and competition appear only when supplied through a user's imported dataset. Google Trends is opened externally; its relative-interest index is not absolute search volume.
+SwiftLinkIQ does not scrape Google's private endpoints or fabricate search data. Explore widgets are rendered by Google's official embed loader. Google notes that chart embedding is not available for every chart. If a widget cannot load, use the provided link to open the same search on Google Trends.
 
-The current competitor module compares keyword lists supplied by the user. It does not scrape search engines or retrieve private competitor analytics. Suggestions are generated locally and are not presented as live autocomplete results.
+Google's public BigQuery Trends dataset is not connected in this version. It contains selected top and rising queries, not arbitrary keyword Explore reports. Connecting it would require a server-side BigQuery integration. The Trending Now page therefore links to Google's public Trending Now experience instead of displaying invented data.
 
-## Tech stack
+Google Trends values are relative, normalized interest indices (0–100), not absolute search counts. Attribute reused Trends data to Google.
 
-- React 18, TypeScript, Vite
-- React Router HashRouter (static-host friendly)
-- Recharts, PapaParse, jsPDF, Lucide React
-- LocalStorage for research, saved keywords and theme preference
-- GitHub Pages + GitHub Actions
-
-## Requirements
-
-Node.js 20+ and npm.
-
-## Install and run
+## Local development
 
 ```bash
 npm install
@@ -51,28 +34,18 @@ npm run build
 npm run preview
 ```
 
-The production output is `dist/`.
+## GitHub Pages
 
-## GitHub Pages deployment
+1. Push this repository to GitHub with the repository name `SwiftLink-IQ`.
+2. In **Settings → Pages**, set **Build and deployment → Source** to **GitHub Actions**.
+3. Push to `main`. The workflow builds and deploys the `dist` directory.
 
-1. Create a GitHub repository named `swiftlinkiq` (or update `base` in `vite.config.ts` to match your repository name).
-2. Push this project to the `main` branch.
-3. In repository Settings → Pages, select **GitHub Actions** as the build and deployment source.
-4. The included `.github/workflows/deploy.yml` installs dependencies, builds the site and deploys `dist/` on every push to `main`.
-5. The Vite base path is configured for `/swiftlinkiq/` when running in GitHub Actions. If the repository has a different name, update that path.
+The Vite base path is configured as `/SwiftLink-IQ/` in GitHub Actions builds. If you rename the repository, update `vite.config.ts`.
 
-For a user/organization repository named `<username>.github.io`, change the Vite `base` to `/`.
+## Storage and privacy
 
-## Data storage and privacy
+Saved searches and theme preference are stored in the visitor's browser using localStorage. They are not uploaded or synchronized.
 
-All research and saved keywords stay in the browser's local storage. Clearing browser site data removes the locally stored information. Use Settings → Export backup to create a JSON backup before clearing data or changing browsers. No user account or remote analytics is implemented.
+## Attribution
 
-## Limitations and future extensions
-
-- No live Google Ads, Search Console or Bing Webmaster integration is included; those require user-authorized integrations and credentials.
-- IndexedDB migration, advanced mapping for unusual CSV schemas and semantic clustering can be added in future iterations.
-- Trend history must be supplied by a legitimate data source or inspected on Google Trends; no historical series is fabricated.
-
-## License
-
-Choose and add a license before public redistribution. The repository is provided without an implied third-party data license.
+Google Trends is a Google service. SwiftLinkIQ is an independent interface and is not affiliated with Google. See [Google Trends Help](https://support.google.com/trends/answer/4365538) for embedding and attribution guidance.
